@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'accounts',
     'posts',
+    'imagekit',
+    'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,3 +125,9 @@ STATIC_URL = '/static/'
 
 # global 변수 설정
 AUTH_USER_MODEL = 'accounts.User' # 'auth.User'
+
+# urls.py와 같은 역할
+MEDIA_URL = '/media/'
+
+# 내부적으로 파일을 찾는 설정
+MEDIA_ROOT = os.path.join(BASE_DIR)
