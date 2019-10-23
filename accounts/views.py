@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from .forms import CustomUserCreationForm
+from .models import User
 
 # Create your views here.
 def signup(request):
@@ -35,3 +36,11 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect("accounts:login")
+
+def user_page(request, id):
+    # 기본적으로 django에서 제공하는 user와의 충돌을 피하기 위해서 user_info로 변경하였다.
+    user_info = get_object_or_404(User, id=id)
+    context = {
+        'user_info': user_info,
+    }
+    return render(request, 'accounts/user_page.html', context)
