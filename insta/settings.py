@@ -120,3 +120,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# global 변수 설정
+AUTH_USER_MODEL = 'accounts.User' # 'auth.User'
