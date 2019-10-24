@@ -92,7 +92,7 @@ def like(request, id):
     return redirect('posts:feed')
 
 def feed(request):
-    posts = Post.objects.all().order_by('created_at')
+    posts = Post.objects.all().order_by('-created_at')
     context = {
         'posts': posts
     }
