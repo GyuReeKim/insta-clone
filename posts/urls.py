@@ -11,4 +11,6 @@ urlpatterns = [
     path('<int:id>/', views.detail, name="detail"),
     path('<int:id>/delete/', views.delete, name="delete"),
     path('feed/', views.feed, name="feed"),
+    path('<int:id>/detail/like/', views.detail_like, name="detail_like"),
+    path('all/', views.all, name="all"),
 ]

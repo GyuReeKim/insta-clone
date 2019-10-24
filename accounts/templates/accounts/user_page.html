@@ -1,13 +1,37 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 {% block body %}
 <!-- 기본적으로 django에서 제공하는 user와의 충돌을 피하기 위해서 user_info로 변경하였다. -->
-  <h1>{{user_info.username}}님의 유저페이지입니다.</h1>
+  <div class="jumbotron mt-2">
+    <h1 class="display-6">{{user_info.username}}</h1>
+    <div class="mt-3">
+      <p class="lead">팔로워 : {{user_info.followers.all | length}}</p>
+      <p class="lead">팔로잉 : {{user_info.followings.all | length}}</p>
+    </div>
+    {% if user == user_info %}
+      <a href="{% url 'posts:index' %}" class="btn btn-primary">내글보기</a>
+    {% endif %}
+    <hr class="my-4">
+    {% if user.is_authenticated and user != user_info %}
+      <a href="{% url 'accounts:follow' user_info.id %}" class="btn btn-primary">팔로우</a>
+    {% else %}
+      <!-- <a href="{% url 'accounts:delete' user_info.id %}">회원탈퇴</a> -->
+      <div class="row">
+        <form action="{% url 'accounts:delete' user_info.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="탈퇴" class="btn btn-danger mx-1">
+        </form>
+        <a href="{% url 'accounts:update' %}" class="btn btn-success mx-1">정보수정</a>
+        <a href="{% url 'accounts:password' %}" class="btn btn-warning mx-1">비밀번호변경</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- <h1>{{user_info.username}}님의 유저페이지입니다.</h1>
   <h5>{{user_info.username}}를 팔로우하는 사람 {{user_info.followers.all}}</h5>
   <h5>팔로워 : {{user_info.followers.all | length}}</h5>
   <h5>{{user_info.username}}가 팔로우하는 사람 {{user_info.followings.all}}</h5>
-  <h5>팔로잉 : {{user_info.followings.all | length}}</h5>
+  <h5>팔로잉 : {{user_info.followings.all | length}}</h5> -->
 
-  {% if user.is_authenticated and user != user_info %}
-    <a href="{% url 'accounts:follow' user_info.id %}">팔로우</a>
-  {% endif %}
+
 {% endblock %}

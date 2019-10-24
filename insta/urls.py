@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from posts import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
     path('posts/', include('posts.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('', views.feed),
 ]
 
 # image url에 접근하기 위해 필요하다.

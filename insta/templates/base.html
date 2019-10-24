@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
 </head>
 <body>
   <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'posts:index' %}"><i class="fab fa-instagram"></i> | Instagram</a>
+    <a class="navbar-brand" href="{% url 'posts:feed' %}"><i class="fab fa-instagram"></i> | Instagram</a>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -18,7 +19,8 @@
     {% if user.is_authenticated %}
       <div>
         <a href="{% url 'accounts:user_page' user.id %}" class="btn">{{ user.username }}</a>
-        <a href="{% url 'posts:feed' %}" class="btn">피드</a>
+        <a href="{% url 'posts:all' %}" class="btn">전체글보기</a>
+        <!-- <a href="{% url 'posts:index' %}" class="btn">내글보기</a> -->
         <a href="{% url 'posts:create' %}" class="btn">글쓰기</a>
         <a href="{% url 'accounts:logout' %}" class="btn">로그아웃</a>
       </div>

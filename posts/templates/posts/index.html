@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 {% block body %}
   <div class="container m-3">
     <div class="row d-flex justify-content-center">
       {% for post in posts %}
-        {% include 'posts/_post.html' %}
+        {% if post.user == user %}
+          {% include 'posts/_post.html' %}
+        {% endif %}
       {% endfor %}
     </div>
   </div>

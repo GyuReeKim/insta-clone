@@ -2,24 +2,34 @@
 <div class="card mb-3">
   <div class="row no-gutters">
     <div class="col">
-      <img src="{{post.image.url}}" class="card-img" alt="...">
+      <img src="{{post.image.url}}" class="card-img" alt="..." style="width:300px;">
     </div>
     <div class="col">
       <div class="card-body">
-        <h5 class="card-title">{{post.user}} <a href="" class="btn">follow</a></h5>
+        {% if user.is_authenticated and user == post.user %}
+          <h5 class="card-title"><a href="{% url 'accounts:user_page' post.user.id %}">{{post.user}}</a></h5>
+        {% else %}
+          <h5 class="card-title"><a href="{% url 'accounts:user_page' post.user.id %}">{{post.user}}</a> <a href="{% url 'accounts:follow' post.user.id %}" class="btn btn-primary">follow</a></h5>
+        {% endif %}
         <p class="card-text">{{post|hashtag_link|safe}}</p>
         <p class="card-text"><small class="text-muted">{{post.created_at}}</small></p>
       </div>
       <div class="card-body">
         {% if user in post.like_users.all %}
-        <a href="{% url 'posts:like' post.id %}"><i class="fas fa-heart mr-1"></i></a>
+        <a href="{% url 'posts:detail_like' post.id %}"><i class="fas fa-heart mr-1"></i></a>
         <!-- {{post.like_users.count}} -->
         {% else %}
-        <a href="{% url 'posts:like' post.id %}"><i class="far fa-heart mr-1"></i></a>
+        <a href="{% url 'posts:detail_like' post.id %}"><i class="far fa-heart mr-1"></i></a>
         <!-- {{post.like_users.all | length}} -->
         {% endif %}
         <a href=""><i class="far fa-comment"></i></a>
         <p class="mt-1 mb-0">좋아요 {{post.like_users.count}}개</p>
+        {% if user == post.user %}
+        <form action="{% url 'posts:delete' post.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="삭제" class="btn btn-danger mt-1">
+        </form>
+        {% endif %}
       </div>
     </div>
   </div>

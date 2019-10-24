@@ -31,16 +31,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'allauth', # 필수
+    'allauth.account', # 필수
+    'allauth.socialaccount', # 필수
     'accounts',
     'posts',
     'imagekit',
     'bootstrap4',
+    'bootstrap_pagination',
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth', # 필수
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
+    'django.contrib.messages', # 필수
     'django.contrib.staticfiles',
+    'django.contrib.sites', # 추가
+    'allauth.socialaccount.providers.kakao', # 카카오 추가
 ]
 
 MIDDLEWARE = [
@@ -63,7 +69,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request', # allauth를 사용하기 위해 꼭 필요하다.
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -131,3 +137,15 @@ MEDIA_URL = '/media/'
 
 # 내부적으로 파일을 찾는 설정
 MEDIA_ROOT = os.path.join(BASE_DIR)
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+
+# LOGIN_REDIRECT_URL = 'posts:index'
